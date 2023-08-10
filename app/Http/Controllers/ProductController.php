@@ -32,6 +32,7 @@ class ProductController extends Controller
 
     return view('products.show')->with([
         'element' => $product,
+        'html' => "<h2>SOY HTML EN BLADE !!!</h2>",
     ]);
         
     }

@@ -11,5 +11,8 @@
     <h3>{{ $element-> price }}</h3>
     <h3>{{ $element-> stock }}</h3>
     <h3>{{ $element-> status }}</h3>
+
+      {!! $html !!}
+
 </body>
 </html>
