@@ -3,19 +3,17 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use App\Models\Product;
 
 class ProductController extends Controller
 {
     public function index(){
-       
-       $name = config('app.undefined', 'welcome');  /// View not found
 
-       dump($name); // imprime datos sin cortar la ejecución
-       //dd();   // imprime datos y detiene la ejecucion
-       return view('products.index');
+       $products =  Product::all();
 
+        return view('products.index');
 
-       return view($name);
     }
 
     public function create(){
@@ -27,7 +25,14 @@ class ProductController extends Controller
     }
 
     public function show($product){
-        return view('products.show');
+
+    // $product = Product::find($product);   // null si no existe id
+
+     $product = Product::findOrFail($product);  // 404 NOT FOUND si no existe id
+     //return $product;
+     dd($product);
+
+    return view('products.show');
         
     }
 
