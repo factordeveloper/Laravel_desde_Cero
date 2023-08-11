@@ -10,9 +10,13 @@ class ProductController extends Controller
 {
     public function index(){
 
-       $products =  Product::all();
+       $products = []; // Product::all();
 
-        return view('products.index');
+      /*  return view('products.index')->with([
+            'products'=> $products,
+        ]);
+      */
+        return view('products.index', compact('products'));
 
     }
 
@@ -31,8 +35,8 @@ class ProductController extends Controller
      //dd($product);
 
     return view('products.show')->with([
-        'element' => $product,
-        'html' => "<h2>SOY HTML EN BLADE !!!</h2>",
+        'product' => $product,
+        
     ]);
         
     }

@@ -1,13 +1,20 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
+@extends('layouts.template')
+
+
+@section('content')
+
 
      <h1>List of Products</h1>
+
+ 
+     @if(empty($products))
+     {{--  @empty($products) --}}
+
+         <div class="alert alert-warning">
+             Lista de productos vacia.....
+         </div>
+
+    @else
 
     <div class="table-responsive">
         <table class="table-table-striped">
@@ -16,23 +23,35 @@
                     <th>ID</th>
                     <th>TITLE</th>
                     <th>DESCRIPTION</th>
+                    <th>PRICE</th>
+                    <th>STOCK</th>
+                    <th>STATUS</th>
                  </tr>
             </thead>
             <tbody>
+             @foreach($products as $producto)
+
                 <tr>
-                  <td>1</td>
-                  <td>Jabon</td>
-                  <td>Jabon description</td>
+                  <td>{{ $producto->id}}</td>
+                  <td>{{ $producto->title}}</td>
+                  <td>{{ $producto->description}}</td>
+                  <td>{{ $producto->price}}</td>
+                  <td>{{ $producto->stock}}</td>
+                  <td>{{ $producto->status}}</td>
                 </tr>
-                  <tr>
-                  <td>2</td>
-                  <td>Shampoo</td>
-                  <td>descripcion shampoo</td>
-                </tr>
-                <tr
-                ></tr>
+
+             @endforeach    
             </tbody>
         </table>
+  
     </div>
-</body>
-</html>
+
+    @endif
+    {{-- @endempty --}}
+
+    @endsection
+
+
+
+
+
