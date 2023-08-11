@@ -18,37 +18,7 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-/*
-Route::get('products', function () {
-    return 'Lista de productos';
-})->name('products.index');
 
-Route::get('products/create', function () {
-    return 'Aquí para crear un producto';
-})->name('products.create');
-
-Route::post('products', function () {
-    ////
-})->name('products.store');
-
-Route::get('products/{product}', function ($product) {
-    return "mostrar producto con id {$product}";
-})->name('products.show');
-
-Route::get('products/{product}/edit', function ($product) {
-    return "editar producto con id {$product}";
-})->name('products.edit');
-
-Route::match(['put', 'patch'], 'products/{product}', function ($product) {
-    /////////
-})->name('products.update');
-
-
-Route::delete('products/{product}', function ($product) {
-    /////////
-})->name('products.destroy');
-
-*/
 
 
 Route::get('products', [ProductController::class, 'index' ])->name('products.index');
