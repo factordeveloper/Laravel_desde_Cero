@@ -41,6 +41,13 @@ class ProductController extends Controller
 
        */
         $product = Product::create(request()->all());
+
+       // return redirect()->back();  // redirigir a la misma pagina
+
+        return redirect()->route('products.index');
+
+        //  return redirect()->action('ProductController@index');  //no me funciono
+
         return $product;
         
 
@@ -79,7 +86,8 @@ class ProductController extends Controller
 
         $product->update(request()->all());
 
-        return $product;
+       // return $product;
+       return redirect()->route('products.index');
 
     }
 
@@ -89,7 +97,8 @@ class ProductController extends Controller
 
         $product->delete();
 
-        return $product;
+       // return $product;
+        return redirect()->route('products.index');
 
     }
     
