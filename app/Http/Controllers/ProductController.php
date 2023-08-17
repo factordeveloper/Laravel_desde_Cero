@@ -28,28 +28,36 @@ class ProductController extends Controller
 
     public function store(){
        
-      /*
-      $product =  Product::create([
-              
-             'title' => request()->title,
-             'description' => request()->description,
-             'price' => request()->price,
-             'stock' => request()->stock,
-             'status' => request()->status,
+        $rules = [
+            'title' => ['required', 'max:255'],
+            'description' => ['required', 'max:1000'],
+            'price' => ['required', 'min:1'],
+            'stock' => ['required', 'min:0'],
+            'status' => ['required', 'in:DISPONIBLE,NO DISPONIBLE'],
+          
+        ];
 
-        ]);
+        request()->validate($rules);
 
-       */
+       if(request()->status == 'DISPONIBLE' && request()->stock == 0) {
+            /// flash() para mostrar solo en form | withErrors
+          // session()->flash('error', 'si esta disponible, debe haber stock');
+
+           return redirect()
+           ->back()
+           ->withInput(request()->all())
+           ->withErrors('error', 'si esta disponible, debe haber stock');
+
+       }
+      
         $product = Product::create(request()->all());
 
-       // return redirect()->back();  // redirigir a la misma pagina
+       // session()->flash('success', "El nuevo producto id : {$product->id} ha sido creado");
 
-        return redirect()->route('products.index');
-
-        //  return redirect()->action('ProductController@index');  //no me funciono
-
-        return $product;
-        
+        return redirect()
+             ->route('products.index')
+             ->withSuccess("El nuevo producto id : {$product->id} ha sido creado");
+             // ->with(['success' => ""El nuevo producto id : {$product->id} ha sido creado"]);
 
     }
 
@@ -81,13 +89,26 @@ class ProductController extends Controller
     }
 
     public function update($product){
+
+        $rules = [
+            'title' => ['required', 'max:255'],
+            'description' => ['required', 'max:1000'],
+            'price' => ['required', 'min:1'],
+            'stock' => ['required', 'min:0'],
+            'status' => ['required', 'in:DISPONIBLE,NO DISPONIBLE'],
+          
+        ];
+
+        request()->validate($rules);
         
         $product = Product::findOrFail($product);
 
         $product->update(request()->all());
 
        // return $product;
-       return redirect()->route('products.index');
+       return redirect()
+             ->route('products.index')
+             ->withSuccess("El nuevo producto id : {$product->id} ha sido actualizado");
 
     }
 
@@ -98,7 +119,10 @@ class ProductController extends Controller
         $product->delete();
 
        // return $product;
-        return redirect()->route('products.index');
+        return redirect()
+        ->route('products.index')
+        ->withSuccess("El nuevo producto id : {$product->id} ha sido eliminado");;
+
 
     }
     
