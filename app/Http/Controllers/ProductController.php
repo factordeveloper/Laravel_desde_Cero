@@ -46,13 +46,13 @@ class ProductController extends Controller
            return redirect()
            ->back()
            ->withInput(request()->all())
-           ->withErrors('error', 'si esta disponible, debe haber stock');
+           ->withErrors('si esta disponible, debe haber stock');
 
        }
       
         $product = Product::create(request()->all());
 
-       // session()->flash('success', "El nuevo producto id : {$product->id} ha sido creado");
+        //session()->flash('success', "El nuevo producto id : {$product->id} ha sido creado");
 
         return redirect()
              ->route('products.index')
