@@ -1,4 +1,4 @@
-@extends('layouts.template')
+@extends('layouts.app')
 
 
 @section('content')
@@ -6,7 +6,7 @@
 
      <h1>List of Products</h1>
 
-     <a class="btn btn-success" href="{{ route('products.create') }}">Crear Producto</a>
+     <a class="btn btn-success mb-3" href="{{ route('products.create') }}">Crear Producto</a>
 
  
      @if(empty($products))
@@ -19,7 +19,7 @@
     @else
 
     <div class="table-responsive">
-        <table class="table-table-striped">
+        <table class="table table-striped">
             <thead class="thead-light">
                  <tr>
                     <th>ID</th>
@@ -45,7 +45,7 @@
                     <a class="btn btn-link" href="{{ route('products.show', ['product' => $producto->id]) }}">Mostrar</a>
                     <a class="btn btn-link" href="{{ route('products.edit', ['product' => $producto->id]) }}">Editar</a>
                     
-                   <form method="POST" action="{{ route('products.destroy', ['product' => $producto->id]) }}">
+                   <form method="POST" class="d-inline" action="{{ route('products.destroy', ['product' => $producto->id]) }}">
                          @csrf 
                          @method('DELETE')
                         <button type="submit" class="btn btn-link">BORRAR</button>   
