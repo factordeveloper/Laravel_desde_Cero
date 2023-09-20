@@ -2,12 +2,22 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use App\Models\Product;
+use App\Http\Requests\ProductRequest;
+
 
 class ProductController extends Controller
 {
+
+
+    public function __construct(){
+       // $this->middleware('auth')->except(['index', 'create']);
+       $this->middleware('auth');
+    }
+
+
     public function index(){
 
        $products =  Product::all();
@@ -26,31 +36,10 @@ class ProductController extends Controller
         return view('products.create');
     }
 
-    public function store(){
+    public function store(ProductRequest $request){
        
-        $rules = [
-            'title' => ['required', 'max:255'],
-            'description' => ['required', 'max:1000'],
-            'price' => ['required', 'min:1'],
-            'stock' => ['required', 'min:0'],
-            'status' => ['required', 'in:DISPONIBLE,NO DISPONIBLE'],
-          
-        ];
 
-        request()->validate($rules);
-
-       if(request()->status == 'DISPONIBLE' && request()->stock == 0) {
-            /// flash() para mostrar solo en form | withErrors
-          // session()->flash('error', 'si esta disponible, debe haber stock');
-
-           return redirect()
-           ->back()
-           ->withInput(request()->all())
-           ->withErrors('si esta disponible, debe haber stock');
-
-       }
-      
-        $product = Product::create(request()->all());
+        $product = Product::create($request->validated());
 
         //session()->flash('success', "El nuevo producto id : {$product->id} ha sido creado");
 
@@ -61,17 +50,17 @@ class ProductController extends Controller
 
     }
 
-    public function show($product){
+    public function show(Product $product){
 
-     $product = Product::findOrFail($product);  // 404 NOT FOUND si no existe id
+    // $product = Product::findOrFail($product);  // 404 NOT FOUND si no existe id
 
      //dd($product);
 
-   /* return view('products.show')->with([
+    return view('products.show')->with([
         'product' => $product,
         
     ]);
-   */
+   
     return $product;
         
     }
@@ -88,22 +77,11 @@ class ProductController extends Controller
         return "editar producto con id {$product}";
     }
 
-    public function update($product){
+    public function update(ProductRequest $request, Product $product){
 
-        $rules = [
-            'title' => ['required', 'max:255'],
-            'description' => ['required', 'max:1000'],
-            'price' => ['required', 'min:1'],
-            'stock' => ['required', 'min:0'],
-            'status' => ['required', 'in:DISPONIBLE,NO DISPONIBLE'],
-          
-        ];
+    
 
-        request()->validate($rules);
-        
-        $product = Product::findOrFail($product);
-
-        $product->update(request()->all());
+        $product->update($request->all());
 
        // return $product;
        return redirect()
