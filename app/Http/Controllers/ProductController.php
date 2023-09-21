@@ -57,7 +57,7 @@ class ProductController extends Controller
      //dd($product);
 
     return view('products.show')->with([
-        'product' => $product,
+        'producto' => $product,
         
     ]);
    
