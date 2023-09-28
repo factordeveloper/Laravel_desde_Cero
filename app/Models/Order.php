@@ -2,8 +2,9 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Models\Payment;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Order extends Model
 {
@@ -12,4 +13,8 @@ class Order extends Model
         'status',
         
     ];
+
+    public function payment(){
+        return $this->hasOne(Payment::class);
+    }
 }

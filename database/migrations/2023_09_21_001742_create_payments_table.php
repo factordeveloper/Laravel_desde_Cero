@@ -15,8 +15,10 @@ return new class extends Migration
             $table->id();
             $table->float('amount')->unsigned;
             $table->timestamp('payed_at')->nullable();
-            /// order id
+            $table->bigInteger('order_id')->unsigned();
             $table->timestamps();
+
+            $table->foreign('order_id')->references('id')->on('orders');
         });
     }
 
