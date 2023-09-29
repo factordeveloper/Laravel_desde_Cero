@@ -3,7 +3,9 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+use App\Models\Image;
 use App\Models\Order;
+use App\Models\Payment;
 use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -54,6 +56,13 @@ class User extends Authenticatable
         return $this->hasMany(Order::class, 'customer_id');
     }
 
+    public function payments(){
+        return $this->hasManyThrough(Payment::class, Order::class, 'customer_id');
+    }
 
+    public function image()
+    {
+        return $this->morphOne(Image::class, 'imageable');
+    }
 
 }
